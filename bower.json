@@ -1,0 +1,20 @@
+{
+    "name": "angular-tag-typeahead",
+    "description": "Tags input with help of AngularJs typeahead",
+    "version": "0.0.1",
+    "main": "./src/tag-typeahead.js",
+    "keywords": ["manipulation", "input", "tag", "typeahead", "angular"],
+    "authors": [
+        {
+            "name": "kkashpur",
+            "email": "kashpur.kostya@gmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/colonB/angular-tag-typeahead"
+    },
+    "dependencies": {
+        "angular-basic": "git://github.com/colonB/angular-basic"
+    }
+}
