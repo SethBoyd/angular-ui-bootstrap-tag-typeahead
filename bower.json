@@ -1,7 +1,7 @@
 {
     "name": "angular-tag-typeahead",
     "description": "Tags input with help of AngularJs typeahead",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "./src/tag-typeahead.js",
     "keywords": ["manipulation", "input", "tag", "typeahead", "angular"],
     "authors": [
