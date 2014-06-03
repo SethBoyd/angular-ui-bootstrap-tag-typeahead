@@ -1,6 +1,8 @@
 angular.module('tag-typeahead', ['basic'], function () {
+    "use strict";
 })
 .directive('tagTypeaheadInput', function () {
+    "use strict";
     return {
         restrict: 'C',
         replace: true,
