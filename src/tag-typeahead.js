@@ -1,5 +1,8 @@
 angular.module('tag-typeahead', ['basic'], function () {
-}).directive('tagTypeaheadInput', function (convert) {
+    "use strict";
+})
+.directive('tagTypeaheadInput', function () {
+    "use strict";
     return {
         restrict: 'C',
         replace: true,
@@ -8,7 +11,7 @@ angular.module('tag-typeahead', ['basic'], function () {
             placeholder: '='
         },
         controller: function ($scope) {
-            $scope.list = convert.toArray($scope.list, true);
+            $scope.list = angular.injector(['basic']).get('convert').toArray($scope.list, true);
         },
         link: function($scope) {
             $scope.tags = {};
