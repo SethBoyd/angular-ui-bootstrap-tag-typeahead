@@ -9,6 +9,7 @@ angular // jshint ignore:line
             replace: true,
             scope: {
                 list: '=',
+                tags: '=',
                 placeholder: '='
             },
             controller: function ($scope) {
@@ -22,7 +23,6 @@ angular // jshint ignore:line
                 }
             },
             link: function ($scope) {
-                $scope.tags = [];
                 $scope.onSelect = function (item) {
                     var _key;
                     for (_key in $scope._list) {
