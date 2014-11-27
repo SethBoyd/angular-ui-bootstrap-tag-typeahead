@@ -10,6 +10,7 @@ angular // jshint ignore:line
             scope: {
                 list: '=',
                 tags: '=',
+                typeaheadAppendToBody: '=',
                 placeholder: '='
             },
             controller: function ($scope) {
@@ -41,14 +42,13 @@ angular // jshint ignore:line
                             $scope.tags.splice(_key, 1);
                         }
                     }
-
                 };
             },
             template: '<div ng-class="{\'input-group\': tags.length}">' +
             '<div class="input-group-btn">' +
             '<span ng-repeat="tag in tags" class="btn btn-info" type="input" value="{{tag.value}}" ng-click="onClose(this);">{{tag.name}}</span>' +
             '</div>' +
-            '<input type="text" placeholder="{{placeholder}}" ng-model="tagInput" class="form-control" typeahead="state.name for state in _list | filter: $viewValue" typeahead-editable="false" typeahead-on-select="onSelect($item)" />' +
+            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control" typeahead="state.name for state in _list | filter: $viewValue" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-editable="false" typeahead-on-select="onSelect($item)" />' +
             '</div>'
         };
     });
