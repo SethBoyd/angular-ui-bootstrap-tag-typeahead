@@ -2,6 +2,32 @@ angular // jshint ignore:line
     .module('tag-typeahead', ['ui.bootstrap.tpls', 'basic'], function () {
         "use strict";
     })
+    .directive('activateOnEmptyFocus', function () {
+        "use strict";
+        return {
+            restrict: "C",
+            require: "?ngModel",
+            link: function ($scope, element, attrs, model) {
+                var _mark = '.';
+                $scope.col = 3;
+                if ($scope.activateOnEmptyFocus) {
+                    element.bind('focus', function () {
+                        $scope.$apply(function () {
+                            model.$setViewValue(_mark);
+                        });
+                    });
+                    model.$parsers.push(function (input) {
+                        if (angular.isDefined(input) && !input.length) {
+                            model.$setViewValue(_mark);
+                        }
+                    });
+                }
+                $scope.empty = function (input, view) {
+                    return ($scope.activateOnEmptyFocus && view === _mark) || input.toLowerCase().indexOf(view.toLowerCase()) > -1;
+                };
+            }
+        };
+    })
     .directive('tagTypeaheadInput', function () {
         "use strict";
         return {
@@ -11,6 +37,7 @@ angular // jshint ignore:line
                 list: '=',
                 tags: '=',
                 typeaheadAppendToBody: '=',
+                activateOnEmptyFocus: '=',
                 placeholder: '='
             },
             controller: function ($scope) {
@@ -48,7 +75,7 @@ angular // jshint ignore:line
             '<div class="input-group-btn">' +
             '<span ng-repeat="tag in tags" class="btn btn-info" type="input" value="{{tag.value}}" ng-click="onClose(this);">{{tag.name}}</span>' +
             '</div>' +
-            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control" typeahead="state.name for state in _list | filter: $viewValue" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-editable="false" typeahead-on-select="onSelect($item)" />' +
+            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control activate-on-empty-focus" typeahead="state.name for state in _list| filter:$viewValue:empty" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-editable="false" typeahead-on-select="onSelect($item)" />' +
             '</div>'
         };
     });
