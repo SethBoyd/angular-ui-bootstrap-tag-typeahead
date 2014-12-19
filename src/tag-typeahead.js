@@ -11,6 +11,77 @@ angular // jshint ignore:line
         maxTags: 0,
         moreTagsText: '...'
     })
+    .run(function ($templateCache) {
+        "use strict";
+        $templateCache.put("template/typeahead/typeahead-popup.html",
+            "<ul class=\"dropdown-menu\" ng-show=\"isOpen()\" ng-style=\"{'overflow-y': 'auto', height: maxHeight, width: position.width+'px', top: position.top+'px', left: position.left+'px'}\" style=\"display: block;\" role=\"listbox\" aria-hidden=\"{{!isOpen()}}\">\n" +
+            "<li ng-repeat=\"match in matches track by $index\" class=\"tag-typeahead-input-popup-item col-xs-{{gridCols}}\" ng-class=\"{active: isActive($index)}\" ng-mouseenter=\"selectActive($index)\" ng-click=\"selectMatch($index)\" role=\"option\" id=\"{{match.id}}\">\n" +
+            "<div typeahead-match index=\"$index\" match=\"match\" query=\"query\" template-url=\"templateUrl\"></div>\n" +
+            "</li>\n" +
+            "</ul>\n");
+    })
+    .directive('typeaheadPopup', function ($compile, $templateCache, tagTypeaheadPopupConfig, grid, tagTypeaheadInputElement, tagTypeaheadInputPopup) {
+        "use strict";
+        return {
+            link: function (scope, element, attrs) {
+                scope.templateUrl = attrs.templateUrl;
+                scope.isOpen = function () {
+                    return scope.matches.length > 0;
+                };
+                scope.isActive = function (matchIdx) {
+                    return scope.active == matchIdx;
+                };
+                scope.selectActive = function (matchIdx) {
+                    scope.active = matchIdx;
+                };
+                scope.selectMatch = function (activeIdx) {
+                    scope.select(activeIdx);
+                };
+                tagTypeaheadInputPopup.self = element;
+                scope.$watchCollection('matches', function (newMatches, oldMatches) {
+                    if (newMatches !== oldMatches && newMatches.length) {
+                        if (tagTypeaheadPopupConfig.maxColumns === 0) {
+                            scope.cols = Math.floor(scope.position.width / tagTypeaheadInputPopup.minWidth);
+                        } else {
+                            scope.cols = tagTypeaheadPopupConfig.maxColumns;
+                            if (scope.position.width / scope.cols < scope.minWidth) {
+                                scope.cols -= 1;
+                            }
+                        }
+                        if (tagTypeaheadPopupConfig.maxColumnItems === 0) {
+                            scope.colItem = Math.floor(scope.matches.length / scope.cols) + 1;
+                        } else {
+                            scope.colItem = tagTypeaheadPopupConfig.maxColumnItems;
+                        }
+                        if (scope.colItem >= newMatches.length) {
+                            scope.maxHeight = 'auto';
+                            scope.gridCols = grid;
+                        } else {
+                            scope.maxHeight = tagTypeaheadInputPopup.maxHeight + 10;
+                            scope.gridCols = grid / scope.cols;
+                        }
+                    } else {
+                        tagTypeaheadInputPopup.onDefinedHeight(function () {
+                            scope.maxHeight = tagTypeaheadInputPopup.maxHeight + 10;
+                        });
+                        tagTypeaheadInputPopup.onDefinedWidth(function () {
+                            if (angular.isUndefined(scope.minWidth)) {
+                                scope.minWidth = tagTypeaheadInputPopup.minWidth;
+                            }
+                        });
+                    }
+                });
+                scope.$watch('position.left', function (newLeftOffset, oldLeftOffset) {
+                    if (newLeftOffset !== oldLeftOffset) {
+                        if (newLeftOffset > tagTypeaheadInputElement.self.width()) {
+                            scope.position.left -= newLeftOffset - tagTypeaheadInputElement.self.width();
+                        }
+                    }
+                });
+                element.replaceWith($compile(angular.element($templateCache.get("template/typeahead/typeahead-popup.html")))(scope));
+            }
+        };
+    })
     .directive('activateOnEmptyFocus', function () {
         "use strict";
         return {
