@@ -15,6 +15,31 @@ angular // jshint ignore:line
         "use strict";
         this.self = {};
     })
+    .service('tagTypeaheadInputPopup', function () {
+        "use strict";
+        var _height = [];
+        var _width = [];
+        this.self = {};
+        this.items = 0;
+        this.maxHeight = 0;
+        this.minWidth = 0;
+        this.definedHeight = function () {
+            angular.forEach(_height, function (action) {
+                action();
+            });
+        };
+        this.definedWidth = function () {
+            angular.forEach(_width, function (action) {
+                action();
+            });
+        };
+        this.onDefinedHeight = function (action) {
+            _height.push(action);
+        };
+        this.onDefinedWidth = function (action) {
+            _width.push(action);
+        };
+    })
     .run(function ($templateCache) {
         "use strict";
         $templateCache.put("template/typeahead/typeahead-popup.html",
