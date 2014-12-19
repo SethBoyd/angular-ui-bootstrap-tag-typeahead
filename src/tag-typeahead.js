@@ -11,6 +11,10 @@ angular // jshint ignore:line
         maxTags: 0,
         moreTagsText: '...'
     })
+    .service('tagTypeaheadInputElement', function () {
+        "use strict";
+        this.self = {};
+    })
     .run(function ($templateCache) {
         "use strict";
         $templateCache.put("template/typeahead/typeahead-popup.html",
