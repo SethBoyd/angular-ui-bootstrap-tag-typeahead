@@ -137,11 +137,10 @@ angular // jshint ignore:line
             require: "?ngModel",
             link: function ($scope, element, attrs, model) {
                 var _mark = '.';
-                $scope.col = 3;
                 if ($scope.activateOnEmptyFocus) {
                     element.bind('focus', function () {
                         $scope.$apply(function () {
-                            model.$setViewValue(_mark);
+                            model.$setViewValue(element.val() || _mark);
                         });
                     });
                     model.$parsers.push(function (input) {
@@ -150,8 +149,9 @@ angular // jshint ignore:line
                         }
                     });
                 }
-                $scope.empty = function (input, view) {
-                    return ($scope.activateOnEmptyFocus && view === _mark) || input.toLowerCase().indexOf(view.toLowerCase()) > -1;
+                $scope.check = function (input, view) {
+                    return ($scope.activateOnEmptyFocus && view === _mark)
+                        || input.toLowerCase().indexOf(view.toLowerCase()) > -1;
                 };
             }
         };
