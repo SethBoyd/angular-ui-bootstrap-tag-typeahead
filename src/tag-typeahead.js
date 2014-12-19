@@ -2,6 +2,9 @@ angular // jshint ignore:line
     .module('tag-typeahead', ['ui.bootstrap.tpls', 'basic'], function () {
         "use strict";
     })
+    .constant({
+        grid: 12
+    })
     .directive('activateOnEmptyFocus', function () {
         "use strict";
         return {
