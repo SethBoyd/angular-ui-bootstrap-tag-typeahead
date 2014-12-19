@@ -1,7 +1,5 @@
 angular // jshint ignore:line
-    .module('tag-typeahead', ['ui.bootstrap.tpls', 'basic'], function () {
-        "use strict";
-    })
+    .module('tag-typeahead', ['ui.bootstrap', 'basic'])
     .constant({
         grid: 12
     })
