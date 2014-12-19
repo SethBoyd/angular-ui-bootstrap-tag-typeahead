@@ -49,6 +49,25 @@ angular // jshint ignore:line
             "</li>\n" +
             "</ul>\n");
     })
+    .directive('tagTypeaheadInputPopupItem', function ($timeout, tagTypeaheadPopupConfig, tagTypeaheadInputPopup) {
+        "use strict";
+        return {
+            restrict: 'C',
+            link: function (scope, element) {
+                $timeout(function () {
+                    if (element[0].offsetHeight && tagTypeaheadInputPopup.items < tagTypeaheadPopupConfig.maxColumnItems) {
+                        tagTypeaheadInputPopup.items += 1;
+                        tagTypeaheadInputPopup.maxHeight += element[0].offsetHeight;
+                        tagTypeaheadInputPopup.definedHeight();
+                    }
+                    if (element[0].offsetWidth && element[0].offsetWidth > tagTypeaheadInputPopup.minWidth) {
+                        tagTypeaheadInputPopup.minWidth = element[0].offsetWidth;
+                        tagTypeaheadInputPopup.definedWidth();
+                    }
+                });
+            }
+        };
+    })
     .directive('typeaheadPopup', function ($compile, $templateCache, tagTypeaheadPopupConfig, grid, tagTypeaheadInputElement, tagTypeaheadInputPopup) {
         "use strict";
         return {
