@@ -9,6 +9,10 @@ angular // jshint ignore:line
         maxColumns: 1,
         maxColumnItems: 0
     })
+    .value('tagTypeaheadInputConfig', {
+        maxTags: 0,
+        moreTagsText: '...'
+    })
     .directive('activateOnEmptyFocus', function () {
         "use strict";
         return {
