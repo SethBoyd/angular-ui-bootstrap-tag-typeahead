@@ -156,7 +156,7 @@ angular // jshint ignore:line
             }
         };
     })
-    .directive('tagTypeaheadInput', function () {
+    .directive('tagTypeaheadInput', function (array, tagTypeaheadInputElement, tagTypeaheadInputConfig) {
         "use strict";
         return {
             restrict: 'C',
@@ -169,41 +169,94 @@ angular // jshint ignore:line
                 placeholder: '='
             },
             controller: function ($scope) {
-                var _key;
                 $scope._list = [];
-                for (_key in $scope.list) {
-                    //noinspection JSUnresolvedFunction
-                    if ($scope.list.hasOwnProperty(_key)) {
-                        $scope._list.push({value: _key, name: $scope.list[_key]});
-                    }
-                }
-            },
-            link: function ($scope) {
-                $scope.onSelect = function (item) {
-                    var _key;
-                    for (_key in $scope._list) {
-                        if ($scope._list.hasOwnProperty(_key) && $scope._list[_key] === item) {
-                            $scope.tags.push($scope._list[_key]);
-                            $scope.tagInput = '';
-                            $scope._list.splice(_key, 1);
+                $scope.moreTags = false;
+                this.attachTag = function () {
+                    $scope._tags = [];
+                    angular.forEach($scope.tags, function (tag, index) {
+                        if (index > tagTypeaheadInputConfig.maxTags && tag !== $scope.moreTagsIndex) {
+                            $scope._tags.push(tag);
                         }
-                    }
+                    });
                 };
-                $scope.onClose = function (input) {
-                    var _key;
-                    for (_key in $scope.tags) {
-                        if ($scope.tags.hasOwnProperty(_key) && $scope.tags[_key].value === input.tag.value) {
-                            $scope._list.push($scope.tags[_key]);
-                            $scope.tags.splice(_key, 1);
+                this.initList = function (index) {
+                    return {value: index, name: $scope.list[index]};
+                };
+                this.initMoreTags = function () {
+                    this.random = function () {
+                        var _random = Math.floor(Math.random() * 1000) + 1;
+                        return $scope.tags.hasOwnProperty(_random) ? this.random() : _random;
+                    };
+                    $scope.moreTagsIndex = this.random().toString();
+                    $scope.list[$scope.moreTagsIndex] = tagTypeaheadInputConfig.moreTagsText;
+                };
+            },
+            link: function (scope, element, attrs, controller) {
+                tagTypeaheadInputElement.self = element;
+                angular.forEach(scope.list, function (list, index) {
+                    if (!array.in(index, scope.tags)) {
+                        scope._list.push(controller.initList(index));
+                    }
+                });
+                if (tagTypeaheadInputConfig.maxTags) {
+                    controller.initMoreTags();
+                    scope.$watchCollection('tags', function (newTags, oldTags) {
+                        if (angular.isDefined(newTags) && angular.isDefined(oldTags)) {
+                            if (newTags.length > tagTypeaheadInputConfig.maxTags + 1 && !array.in(scope.moreTagsIndex, scope.tags)) {
+                                scope.tags.push(scope.moreTagsIndex);
+                                controller.attachTag();
+                            } else {
+                                if (newTags.length !== oldTags.length) {
+                                    angular.forEach(scope.tags, function (tag, index) {
+                                        if (tag === scope.moreTagsIndex) {
+                                            scope.tags.splice(index, 1);
+                                            controller.attachTag();
+                                        }
+                                    });
+                                }
+                            }
                         }
+                    });
+                }
+                scope.hideTag = function (index, tag) {
+                    return tagTypeaheadInputConfig.maxTags !== 0
+                        && index > tagTypeaheadInputConfig.maxTags
+                        && tag !== scope.moreTagsIndex;
+                };
+                scope.onSelect = function (item) {
+                    angular.forEach(scope._list, function (list, index) {
+                        if (list.value === item.value) {
+                            scope.tags.push(item.value);
+                            scope._list.splice(index, 1);
+                            scope.tagInput = '';
+                        }
+                    });
+                };
+                scope.onClose = function (input) {
+                    if (input === scope.moreTagsIndex) {
+                        scope.moreTags = !scope.moreTags;
+                    } else {
+                        angular.forEach(scope.tags, function (tag, index) {
+                            if (tag === input) {
+                                scope._list.push(controller.initList(input));
+                                scope.tags.splice(index, 1);
+                            }
+                        });
                     }
                 };
             },
             template: '<div ng-class="{\'input-group\': tags.length}">' +
             '<div class="input-group-btn">' +
-            '<span ng-repeat="tag in tags" class="btn btn-info" type="input" value="{{tag.value}}" ng-click="onClose(this);">{{tag.name}}</span>' +
+            '<span ng-repeat="tag in tags" ng-hide="hideTag($index, tag)" class="btn btn-info" type="input" value="{{tag}}" ng-click="onClose(tag);">{{list[tag]}}</span>' +
+            '<ul class="dropdown-menu" style="display: block" role="menu" ng-hide="!moreTags || !_tags.length">' +
+            '<li ng-repeat="tag in _tags">' +
+            '<div class="input-group-btn">' +
+            '<span class="btn btn-block btn-info" type="input" value="{{tag}}" ng-click="onClose(tag);">{{list[tag]}}</span>' +
             '</div>' +
-            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control activate-on-empty-focus" typeahead="state.name for state in _list| filter:$viewValue:empty" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-editable="false" typeahead-on-select="onSelect($item)" />' +
+            '</li>' +
+            '</ul>' +
+            '</div>' +
+            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control activate-on-empty-focus" typeahead="state.name for state in _list|filter:$viewValue:check" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-on-select="onSelect($item)" />' +
             '</div>'
         };
     });
