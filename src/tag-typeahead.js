@@ -5,6 +5,10 @@ angular // jshint ignore:line
     .constant({
         grid: 12
     })
+    .value('tagTypeaheadPopupConfig', {
+        maxColumns: 1,
+        maxColumnItems: 0
+    })
     .directive('activateOnEmptyFocus', function () {
         "use strict";
         return {
