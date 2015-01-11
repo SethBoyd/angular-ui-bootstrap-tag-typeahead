@@ -77,7 +77,7 @@ angular // jshint ignore:line
                     return scope.matches.length > 0;
                 };
                 scope.isActive = function (matchIdx) {
-                    return scope.active == matchIdx;
+                    return scope.active === matchIdx;
                 };
                 scope.selectActive = function (matchIdx) {
                     scope.active = matchIdx;
