@@ -248,7 +248,7 @@ angular // jshint ignore:line
             template: '<div ng-class="{\'input-group\': tags.length}">' +
             '<div class="input-group-btn">' +
             '<span ng-repeat="tag in tags" ng-hide="hideTag($index, tag)" class="btn btn-info" type="input" value="{{tag}}" ng-click="onClose(tag);">{{list[tag]}}</span>' +
-            '<ul class="dropdown-menu" style="display: block" role="menu" ng-hide="!moreTags || !_tags.length">' +
+            '<ul class="dropdown-menu" style="display: block;" role="menu" ng-hide="!moreTags || !_tags.length">' +
             '<li ng-repeat="tag in _tags">' +
             '<div class="input-group-btn">' +
             '<span class="btn btn-block btn-info" type="input" value="{{tag}}" ng-click="onClose(tag);">{{list[tag]}}</span>' +
