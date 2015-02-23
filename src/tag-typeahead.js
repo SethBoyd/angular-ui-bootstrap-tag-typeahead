@@ -1,45 +1,5 @@
 angular // jshint ignore:line
     .module('tag-typeahead', ['ui.bootstrap', 'basic'])
-    .constant({
-        grid: 12
-    })
-    .value('tagTypeaheadPopupConfig', {
-        maxColumns: 1,
-        maxColumnItems: 0
-    })
-    .value('tagTypeaheadInputConfig', {
-        maxTags: 0,
-        moreTagsText: '...'
-    })
-    .service('tagTypeaheadInputElement', function () {
-        "use strict";
-        this.self = {};
-    })
-    .service('tagTypeaheadInputPopup', function () {
-        "use strict";
-        var _height = [];
-        var _width = [];
-        this.self = {};
-        this.items = 0;
-        this.maxHeight = 0;
-        this.minWidth = 0;
-        this.definedHeight = function () {
-            angular.forEach(_height, function (action) {
-                action();
-            });
-        };
-        this.definedWidth = function () {
-            angular.forEach(_width, function (action) {
-                action();
-            });
-        };
-        this.onDefinedHeight = function (action) {
-            _height.push(action);
-        };
-        this.onDefinedWidth = function (action) {
-            _width.push(action);
-        };
-    })
     .run(function ($templateCache) {
         "use strict";
         $templateCache.put("template/typeahead/typeahead-popup.html",
@@ -130,6 +90,17 @@ angular // jshint ignore:line
             }
         };
     })
+    .constant({
+        grid: 12
+    })
+    .value('tagTypeaheadPopupConfig', {
+        maxColumns: 1,
+        maxColumnItems: 0
+    })
+    .value('tagTypeaheadInputConfig', {
+        maxTags: 0,
+        moreTagsText: '...'
+    })
     .directive('activateOnEmptyFocus', function () {
         "use strict";
         return {
@@ -154,6 +125,35 @@ angular // jshint ignore:line
                         || input.toLowerCase().indexOf(view.toLowerCase()) > -1;
                 };
             }
+        };
+    })
+    .service('tagTypeaheadInputElement', function () {
+        "use strict";
+        this.self = {};
+    })
+    .service('tagTypeaheadInputPopup', function () {
+        "use strict";
+        var _height = [];
+        var _width = [];
+        this.self = {};
+        this.items = 0;
+        this.maxHeight = 0;
+        this.minWidth = 0;
+        this.definedHeight = function () {
+            angular.forEach(_height, function (action) {
+                action();
+            });
+        };
+        this.definedWidth = function () {
+            angular.forEach(_width, function (action) {
+                action();
+            });
+        };
+        this.onDefinedHeight = function (action) {
+            _height.push(action);
+        };
+        this.onDefinedWidth = function (action) {
+            _width.push(action);
         };
     })
     .directive('tagTypeaheadInput', function (array, tagTypeaheadInputElement, tagTypeaheadInputConfig) {
