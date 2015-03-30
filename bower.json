@@ -1,31 +1,31 @@
 {
-    "name": "angular-ui-bootstrap-tag-typeahead",
+  "name": "angular-ui-bootstrap-tag-typeahead",
   "version": "0.0.8",
-    "authors": [
-        {
-            "name": "kkashpur",
-            "email": "kashpur.kostya@gmail.com"
-        }
-    ],
-    "description": "Tags input with help of AngularJs typeahead and Twitter Bootstrap",
-    "main": "./src/tag-typeahead.js",
-    "keywords": [
-        "manipulation",
-        "input",
-        "tag",
-        "typeahead",
-        "angular",
-        "twitter",
-        "bootstrap"
-    ],
-    "license": "MIT",
-    "homepage": "http://colonb.org/angular-ui-bootstrap-tag-typeahead",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/colonB/angular-ui-bootstrap-tag-typeahead"
-    },
-    "dependencies": {
-        "angular-bootstrap": "git://github.com/angular-ui/bootstrap-bower",
-        "angular-basic": "git://github.com/colonB/angular-basic"
+  "authors": [
+    {
+      "name": "kkashpur",
+      "email": "kashpur.kostya@gmail.com"
     }
+  ],
+  "description": "Tags input with help of AngularJs typeahead and Twitter Bootstrap",
+  "main": "./src/tag-typeahead.js",
+  "keywords": [
+    "manipulation",
+    "input",
+    "tag",
+    "typeahead",
+    "angular",
+    "twitter",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "homepage": "http://colonb.org/angular-ui-bootstrap-tag-typeahead",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/colonB/angular-ui-bootstrap-tag-typeahead"
+  },
+  "dependencies": {
+    "angular-bootstrap": "git://github.com/angular-ui/bootstrap-bower",
+    "angular-basic": "git://github.com/colonB/angular-basic"
+  }
 }
