@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-bootstrap-tag-typeahead",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "author": "kkashpur <kashpur.kostya@gmail.com>",
   "description": "Tags input with help of AngularJs typeahead and Twitter Bootstrap",
   "main": "./src/tag-typeahead.js",
@@ -18,10 +18,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/colonB/angular-ui-bootstrap-tag-typeahead"
-  },
-  "dependencies": {
-    "angular-bootstrap": "git://github.com/angular-ui/bootstrap-bower",
-    "angular-basic": "git://github.com/colonB/angular-basic"
   },
   "bugs": {
     "url": "https://github.com/colonB/angular-ui-bootstrap-tag-typeahead/issues"
