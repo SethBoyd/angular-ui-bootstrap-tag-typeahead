@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-bootstrap-tag-typeahead",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "kkashpur <kashpur.kostya@gmail.com>",
   "description": "Tags input with help of AngularJs typeahead and Twitter Bootstrap",
   "main": "./src/tag-typeahead.js",
