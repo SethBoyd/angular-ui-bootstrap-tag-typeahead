@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-bootstrap-tag-typeahead",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "authors": [
     {
       "name": "kkashpur",
@@ -25,6 +25,7 @@
     "url": "git://github.com/colonB/angular-ui-bootstrap-tag-typeahead"
   },
   "dependencies": {
+    "angular": "git://github.com/angular/angular.js#~1.4",
     "angular-bootstrap": "git://github.com/angular-ui/bootstrap-bower",
     "angular-basic": "git://github.com/colonB/angular-basic"
   }
