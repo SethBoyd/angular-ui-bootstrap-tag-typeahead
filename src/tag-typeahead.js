@@ -256,7 +256,7 @@ angular // jshint ignore:line
             '</li>' +
             '</ul>' +
             '</div>' +
-            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control activate-on-empty-focus" typeahead="state.name for state in _list|filter:$viewValue:check" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-on-select="onSelect($item)" />' +
+            '<input type="text" placeholder="{{placeholder}}" ng-trim="false" ng-model="tagInput" class="form-control activate-on-empty-focus" typeahead="state.name for state in _list|filter:{\'name\':$viewValue}:check" typeahead-append-to-body="{{typeaheadAppendToBody}}" typeahead-on-select="onSelect($item)" />' +
             '</div>'
         };
     });
