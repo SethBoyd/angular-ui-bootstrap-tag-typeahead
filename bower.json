@@ -25,7 +25,7 @@
     "url": "git://github.com/colonB/angular-ui-bootstrap-tag-typeahead"
   },
   "dependencies": {
-    "angular": "git://github.com/angular/angular.js#~1.2",
+    "angular": "git://github.com/angular/angular.js#~1.4",
     "angular-bootstrap": "git://github.com/angular-ui/bootstrap-bower",
     "angular-basic": "git://github.com/colonB/angular-basic"
   }
